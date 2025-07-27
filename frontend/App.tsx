@@ -651,7 +651,7 @@ export default function App() {
   const [selectedPaymentMethodLocal, setSelectedPaymentMethodLocal] = useState('');
   const [utrNumberLocal, setUtrNumberLocal] = useState('');
   const [activeTabState, setActiveTabState] = useState('home');
-    const [currentViewState, setCurrentViewState] = useState('home');
+  const [currentViewState, setCurrentViewState] = useState('home');
 
   useEffect(() => {
     // Check age verification on app start
@@ -1606,15 +1606,15 @@ export default function App() {
                   <Ionicons name="wallet" size={20} color="#4A90E2" />
                   <Text style={styles.quickActionText}>Check Wallet Balance</Text>
                 </TouchableOpacity>
-              </View>
-            </View>
+              </                
+        View>
           </View>
         );
       default:
         return (
-          <View style={styles.tabContent}>```python
+          <View style={styles.tabContent}>
             <Text style={styles.tabTitle}>🚧 Coming Soon</Text>
-            <Text style={styles.comingSoonText}>यह फीचर जल्द हीआएगा</Text>
+            <Text style={styles.comingSoonText}>यह फीचर जल्द ही आएगा</Text>
           </View>
         );
     }
@@ -1662,8 +1662,6 @@ export default function App() {
     }
   };
 
-  const [showResultsModal, setShowResultsModal] = useState(false);
-
   return (
     <SafeAreaView style={styles.container}>
       {/* Header Component */}
@@ -1680,8 +1678,8 @@ export default function App() {
           <KYCPage onBack={() => setShowKYCPageState(false)} />
         ) : (
           <>
-        {renderContent()}
-                </>
+            {renderContent()}
+          </>
         )}
       </View>
 
@@ -1774,7 +1772,7 @@ export default function App() {
                 }}
               >
                 <Text style={styles.customAmountButtonText}>Place Custom Bet</Text>
-                            </TouchableOpacity>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -1838,6 +1836,7 @@ export default function App() {
         onAccept={handleAgeVerificationAcceptState}
         onReject={handleAgeVerificationReject}
       />
+
       <BetSuccessModal
         visible={showBetSuccessState}
         betDetails={lastBetDetailsState}
@@ -1851,16 +1850,17 @@ export default function App() {
           }
         }}
       />
+
       {/* Results Modal */}
-        <ResultsModal
-          visible={showResultsModal}
-          onClose={() => setShowResultsModal(false)}
-          isAuthenticated={(isAuthenticated && user && user.id) || (isAuthenticatedState && userDataState && userDataState.phone)}
-          onAuthRequired={() => {
-            setShowResultsModal(false);
-            setShowAuthModalState(true);
-          }}
-        />
+      <ResultsModal
+        visible={showResultsModal}
+        onClose={() => setShowResultsModal(false)}
+        isAuthenticated={(isAuthenticated && user && user.id) || (isAuthenticatedState && userDataState && userDataState.phone)}
+        onAuthRequired={() => {
+          setShowResultsModal(false);
+          setShowAuthModalState(true);
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -1872,6 +1872,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  blurredContent: {
+    opacity: 0.3,
   },
   tabContent: {
     flex: 1,
@@ -1904,7 +1907,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   mainBalanceAmount: {
-    color: '#00FF88',    fontSize: isSmallDevice ? 24 : isMediumDevice ? 28 : 32,
+    color: '#00FF88',
+    fontSize: isSmallDevice ? 24 : isMediumDevice ? 28 : 32,
     fontWeight: 'bold',
     marginBottom: 5,
   },
@@ -2022,194 +2026,6 @@ const styles = StyleSheet.create({
     color: '#999',
     fontSize: 12,
   },
-  totalBalanceCard: {
-    backgroundColor: '#1a1a1a',
-    padding: 18,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#4A90E2',
-    width: '100%',
-  },
-  balanceCardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 10,
-  },
-  balanceCardFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginTop: 8,
-  },
-  totalBalanceTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#4A90E2',
-    letterSpacing: 0.5,
-    marginBottom: 8,
-  },
-  totalBalanceAmount: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#00FF88',
-    marginBottom: 4,
-  },
-  totalBalanceSubtitle: {
-    color: '#999',
-    fontSize: 10,
-  },
-  balanceBreakdown: {
-    width: '100%',
-    marginBottom: 30,
-  },
-  balanceItem: {
-    backgroundColor: '#1a1a1a',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  balanceItemTitle: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: '#4A90E2',
-    letterSpacing: 0.5,
-    marginBottom: 6,
-  },
-  balanceItemHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: 8,
-  },
-  balanceItemFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginTop: 6,
-  },
-  winningsAmount: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#00FF88',
-    marginBottom: 4,
-  },
-  bonusAmount: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFD700',
-    marginBottom: 4,
-  },
-  balanceItemSubtitle: {
-    color: '#999',
-    fontSize: 9,
-    lineHeight: 14,
-  },
-  walletActionsTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    gap: 10,
-    marginBottom: 20,
-    position: 'relative',
-    zIndex: 1,
-  },
-  addCashButton: {
-    flex: 1,
-    backgroundColor: '#00FF88',
-    paddingVertical: 10,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  addCashButtonText: {
-    color: '#000',
-    fontSize: 13,
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
-  },
-  withdrawButton: {
-    flex: 1,
-    backgroundColor: '#1a1a1a',
-    paddingVertical: 10,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#4A90E2',
-  },
-  withdrawButtonText: {
-    color: '#4A90E2',
-    fontSize: 13,
-    fontWeight: 'bold',
-    letterSpacing: 0.5,
-  },
-  historyItem: {
-    backgroundColor: '#1a1a1a',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  historyNumber: {
-    color: '#4A90E2',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  historyGame: {
-    color: '#999',
-    fontSize: 12,
-  },
-  historyAmount: {
-    color: '#00FF88',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  noHistory: {
-    color: '#999',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 50,
-  },
-  profileCard: {
-    backgroundColor: '#1a1a1a',
-    padding: 20,
-    borderRadius: 15,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333',
-    width: '100%',
-  },
-  profileName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#4A90E2',
-    marginBottom: 10,
-  },
-  profilePhone: {
-    color: '#999',
-    fontSize: 16,
-    marginBottom: 20,
-  },
-  profileButton: {
-    backgroundColor: '#4A90E2',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  profileButtonText: {
-    color: '#000',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
   comingSoonText: {
     color: '#999',
     fontSize: 16,
@@ -2319,280 +2135,6 @@ const styles = StyleSheet.create({
     fontSize: isSmallDevice ? 12 : 14,
     fontWeight: 'bold',
   },
-  authModalContainer: {
-    backgroundColor: '#0a0a0a',
-    width: '95%',
-    maxHeight: '90%',
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#4A90E2',
-  },
-  authModalContent: {
-    flex: 1,
-    padding: 20,
-  },
-  formContainer: {
-    flex: 1,
-  },
-  formTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#4A90E2',
-    textAlign: 'center',
-    marginBottom: 25,
-  },
-  inputContainer: {
-    marginBottom: 15,
-  },
-  inputLabel: {
-    color: '#4A90E2',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  textInput: {
-    backgroundColor: '#1a1a1a',
-    borderWidth: 1,
-    borderColor: '#333',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    paddingVertical: 12,
-    color: '#fff',
-    fontSize: 16,
-  },
-  submitButton: {
-    backgroundColor: '#4A90E2',
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 15,
-    marginBottom: 12,
-  },
-  submitButtonText: {
-    color: '#000',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  switchModeText: {
-    color: '#00FF88',
-    fontSize: 14,
-    textAlign: 'center',
-    textDecorationLine: 'underline',
-  },
-  referBenefitsContainer: {
-    marginBottom: 20,
-  },
-  benefitItem: {
-    backgroundColor: '#1a1a1a',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    borderLeftWidth: 4,
-    borderLeftColor: '#FFD700',
-  },
-  benefitTitle: {
-    color: '#FFD700',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  benefitDescription: {
-    color: '#ccc',
-    fontSize: 14,
-    lineHeight: 18,
-  },
-  referralStatsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 25,
-  },
-  statCard: {
-    backgroundColor: '#1a1a1a',
-    padding: 15,
-    borderRadius: 12,
-    width: '48%',
-    marginBottom: 10,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  statMainNumber: {
-    color: '#00FF88',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  statMainLabel: {
-    color: '#999',
-    fontSize: 12,
-    textAlign: 'center',
-  },
-  referralCodeSection: {
-    backgroundColor: '#1a1a1a',
-    padding: 20,
-    borderRadius: 15,
-    marginBottom: 25,
-    borderWidth: 1,
-    borderColor: '#4A90E2',
-  },
-  referralCodeTitle: {
-    color: '#FFD700',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  referralCodeSubtitle: {
-    color: '#999',
-    fontSize: 14,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  codeDisplayContainer: {
-    backgroundColor: '#2a2a2a',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#4A90E2',
-  },
-  referralCodeDisplay: {
-    color: '#00FF88',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    letterSpacing: 2,
-  },
-  referralActions: {
-    gap: 10,
-  },
-  copyCodeButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFD700',
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginBottom: 8,
-  },
-  copyCodeText: {
-    color: '#000',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  shareWhatsAppButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#25D366',
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginBottom: 8,
-  },
-  shareWhatsAppText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  shareTelegramButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#0088CC',
-    paddingVertical: 12,
-    borderRadius: 8,
-  },
-  shareTelegramText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  howItWorksSection: {
-    backgroundColor: '#1a1a1a',
-    padding: 20,
-    borderRadius: 15,
-    marginBottom: 25,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  howItWorksTitle: {
-    color: '#FFD700',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  stepsContainer: {
-    gap: 15,
-  },
-  workStep: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 15,
-  },
-  workStepNumber: {
-    backgroundColor: '#4A90E2',
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    textAlign: 'center',
-    lineHeight: 30,
-  },
-  workStepContent: {
-    flex: 1,
-  },
-  workStepTitle: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  workStepDescription: {
-    color: '#999',
-    fontSize: 14,
-    lineHeight: 18,
-  },
-  commissionStructure: {
-    backgroundColor: '#1a1a1a',
-    padding: 20,
-    borderRadius: 15,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#00FF88',
-  },
-  commissionTitle: {
-    color: '#FFD700',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  commissionItems: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  commissionItem: {
-    alignItems: 'center',
-  },
-  commissionAmount: {
-    color: '#00FF88',
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  commissionLabel: {
-    color: '#999',
-    fontSize: 12,
-    textAlign: 'center',
-  },
-
   // Policy & Terms Styles
   policyContainer: {
     width: '100%',
@@ -2612,7 +2154,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     paddingLeft: 10,
   },
-
   // Help & Support Styles
   helpContainer: {
     width: '100%',
@@ -2647,7 +2188,8 @@ const styles = StyleSheet.create({
   contactInfo: {
     marginLeft: 15,
     flex: 1,
-  },  contactMethod: {
+  },
+  contactMethod: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
@@ -2835,7 +2377,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 16,
   },
-
   // Authentication Required Styles
   authRequiredContainer: {
     flex: 1,
