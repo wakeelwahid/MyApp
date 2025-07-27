@@ -3099,13 +3099,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     ...Platform.select({
       ios: {
-        shadowColor: "#00FF88",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
+        boxShadow: "0 4px 8px rgba(0, 255, 136, 0.3)",
       },
       android: {
         elevation: 8,
+      },
+      web: {
+        boxShadow: "0 4px 8px rgba(0, 255, 136, 0.3)",
       },
     }),
   },

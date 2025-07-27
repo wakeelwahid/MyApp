@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { View, Text, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Alert, Animated, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, ScrollView, TextInput, Alert, Animated, Dimensions, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
@@ -32,7 +31,7 @@ export default function BettingModal({
   const [selectedNumber, setSelectedNumber] = React.useState<any>(null);
   const [selectedType, setSelectedType] = React.useState<string>('');
   const [customAmount, setCustomAmount] = React.useState<string>('');
-  
+
   // Animation values
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const scaleAnim = React.useRef(new Animated.Value(0.8)).current;
@@ -147,13 +146,11 @@ export default function BettingModal({
     }
 
     return {
-      background: `linear-gradient(135deg, ${gradientColors[0]} 0%, ${gradientColors[1]} 50%, ${gradientColors[2]} 100%)`,
+      backgroundColor: gradientColors[0], // Fallback for React Native Web
       borderWidth: 2,
       borderColor,
       shadowColor,
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.8,
-      shadowRadius: 15,
+      boxShadow: '0 8px 15px rgba(138,43,226,0.8)',
       elevation: 12,
     };
   };
@@ -213,13 +210,13 @@ export default function BettingModal({
                 <View style={[styles.particle, { top: -5, right: 5 }]} />
               </Animated.View>
             )}
-            
+
             <Text style={[
               styles.numberText,
               { color: getNumberTextColor(i) },
               isSelected && styles.selectedNumberText
             ]}>{i}</Text>
-            
+
             {isSelected && (
               <Animated.View style={[
                 styles.betAmountBadge,
@@ -230,7 +227,7 @@ export default function BettingModal({
                 <Text style={styles.betAmountBadgeText}>₹{bet.amount}</Text>
               </Animated.View>
             )}
-            
+
             {/* Glow effect */}
             <Animated.View style={[
               styles.glowEffect,
@@ -291,12 +288,12 @@ export default function BettingModal({
                 }]
               }
             ]} />
-            
+
             <Text style={[
               styles.andarBaharText,
               isSelected && styles.selectedAndarText
             ]}>{i}</Text>
-            
+
             {isSelected && (
               <Animated.View style={[
                 styles.betAmountBadgeSmall,
@@ -358,12 +355,12 @@ export default function BettingModal({
                 }]
               }
             ]} />
-            
+
             <Text style={[
               styles.andarBaharText,
               isSelected && styles.selectedBaharText
             ]}>{i}</Text>
-            
+
             {isSelected && (
               <Animated.View style={[
                 styles.betAmountBadgeSmall,
@@ -396,7 +393,7 @@ export default function BettingModal({
           })
         }
       ]}>
-        
+
 
         <Animated.View style={[
           styles.bettingModal,
@@ -429,7 +426,7 @@ export default function BettingModal({
                 <Ionicons name="close" size={24} color="#ffffff" />
               </TouchableOpacity>
             </View>
-            
+
             {/* Animated border */}
             <Animated.View style={[
               styles.headerBorder,
@@ -765,9 +762,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       ios: {
         shadowColor: '#FFD700',
-        shadowOffset: { width: 0, height: 25 },
-        shadowOpacity: 0.4,
-        shadowRadius: 80,
+        boxShadow: '0 25px 80px rgba(255, 215, 0, 0.4)',
       },
       android: {
         elevation: 12,
@@ -806,9 +801,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#FFD700',
     flex: 1,
-    textShadowColor: 'rgba(255, 215, 0, 0.5)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadow: '0 2px 4px rgba(255, 215, 0, 0.5)',
   },
   closeIconContainer: {
     padding: 12,
@@ -892,9 +885,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     marginBottom: 15,
-    textShadowColor: 'rgba(255, 215, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(255, 215, 0, 0.3)',
     zIndex: 1,
   },
   selectedNumbersList: {
@@ -951,9 +942,7 @@ const styles = StyleSheet.create({
     color: '#00ff88',
     fontSize: 18,
     fontWeight: '900',
-    textShadowColor: 'rgba(0, 255, 136, 0.5)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadow: '0 2px 4px rgba(0, 255, 136, 0.5)',
   },
   sectionTitle: {
     fontSize: 20,
@@ -961,9 +950,7 @@ const styles = StyleSheet.create({
     color: '#FFD700',
     marginBottom: 20,
     textAlign: 'center',
-    textShadowColor: 'rgba(255, 215, 0, 0.5)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadow: '0 2px 4px rgba(255, 215, 0, 0.5)',
   },
   numbersContainer: {
     flex: 1,
@@ -1027,9 +1014,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     textAlign: 'center',
     zIndex: 1,
-    textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
   },
   selectedNumberText: {
     fontSize: 18,
@@ -1126,9 +1111,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     zIndex: 1,
-    textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
   },
   selectedAndarText: {
     color: '#000000',
@@ -1196,9 +1179,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '900',
     zIndex: 1,
-    textShadowColor: 'rgba(255, 255, 255, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(255, 255, 255, 0.3)',
   },
   popupOverlay: {
     flex: 1,
@@ -1239,9 +1220,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#FFD700',
     flex: 1,
-    textShadowColor: 'rgba(255, 215, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(255, 215, 0, 0.3)',
   },
   popupCloseIcon: {
     padding: 10,
@@ -1259,9 +1238,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     marginBottom: 15,
-    textShadowColor: 'rgba(255, 215, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(255, 215, 0, 0.3)',
   },
   quickAmountGrid: {
     flexDirection: 'row',
@@ -1294,9 +1271,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '800',
     zIndex: 1,
-    textShadowColor: 'rgba(255, 215, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(255, 215, 0, 0.3)',
   },
   customAmountInput: {
     backgroundColor: '#1a1a1a',
@@ -1334,8 +1309,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '900',
     zIndex: 1,
-    textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.5)',
   },
 });
