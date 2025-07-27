@@ -3,12 +3,9 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  StatusBar,
   Modal,
   TextInput,
   Alert,
-  FlatList,
-  Animated,
   Dimensions,
   TouchableOpacity,
   Text,
@@ -28,18 +25,11 @@ import WalletOperations from "./components/WalletOperations";
 import PaymentSuccess from "./components/PaymentSuccess";
 import WithdrawSuccess from "./components/WithdrawSuccess";
 import Profile from "./components/Profile";
-import BetHistory from "./components/BetHistory";
 import AgeVerificationModal from "./components/AgeVerificationModal";
 import Transaction from "./components/Transaction";
 import KYCPage from "./components/KYCPage";
 import ReferPage from "./components/ReferPage";
-import RefundPolicy from "./components/RefundPolicy";
 import { GameHistory, ResultsModal } from "./components";
-
-// Import API services
-import { userService } from "./services/userService";
-import { walletService } from "./services/walletService";
-import { gameService } from "./services/gameService";
 
 // Import constants
 import { GAME_CARDS, FEATURES } from "./constants/gameData";
@@ -49,22 +39,37 @@ import { useAuth } from "./hooks/useAuth";
 import { useWallet } from "./hooks/useWallet";
 import AuthScreen from "./components/AuthScreen";
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const isSmallDevice = SCREEN_WIDTH < 375;
 const isMediumDevice = SCREEN_WIDTH >= 375 && SCREEN_WIDTH < 768;
-const isLargeDevice = SCREEN_WIDTH >= 768;
+
+interface BetItem {
+  id: number;
+  number: string | number;
+  amount: number;
+  type: string;
+  game: string;
+  timestamp: number | Date;
+  status?: string;
+  sessionTime?: string;
+  date?: string;
+}
+
+interface GameItem {
+  title: string;
+  timing?: string;
+}
 
 export default function App() {
   // Auth state
-  const { user, isAuthenticated, login, register, logout, updateProfile } =
-    useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Use proper authentication state from useAuth hook
   const [showAuthRequired, setShowAuthRequired] = useState(false);
   const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
 
   // Wallet state
-  const { wallet, winnings, bonus, addMoney, withdrawMoney } = useWallet();
+  const { wallet, withdrawMoney } = useWallet();
 
   // Sync authentication states
   useEffect(() => {
@@ -76,13 +81,12 @@ export default function App() {
     }
   }, [isAuthenticated, user]);
 
-  const [winningsState, setWinningsState] = useState("₹0.00");
   const [showBettingModalState, setShowBettingModalState] = useState(false);
-  const [selectedGameState, setSelectedGameState] = useState(null);
+  const [selectedGameState, setSelectedGameState] = useState<GameItem | null>(null);
   const [showAmountModalState, setShowAmountModalState] = useState(false);
-  const [selectedNumberState, setSelectedNumberState] = useState(null);
+  const [selectedNumberState, setSelectedNumberState] = useState<string | number | null>(null);
   const [customAmountState, setCustomAmountState] = useState("");
-  const [betListState, setBetListState] = useState([]);
+  const [betListState, setBetListState] = useState<BetItem[]>([]);
   const [betHistoryState, setBetHistoryState] = useState([
     {
       id: "1",
@@ -608,7 +612,6 @@ export default function App() {
   ]);
   const [currentBetTypeState, setCurrentBetTypeState] = useState("numbers");
   const [showAuthModalState, setShowAuthModalState] = useState(false);
-  const [authModeState, setAuthModeState] = useState("login");
   const [showAddCashModalState, setShowAddCashModalState] = useState(false);
   const [showWithdrawModalState, setShowWithdrawModalState] = useState(false);
   const [depositAmountState, setDepositAmountState] = useState("");
@@ -621,7 +624,6 @@ export default function App() {
     useState(false);
   const [showWithdrawSuccessModalState, setShowWithdrawSuccessModalState] =
     useState(false);
-  const [countdownSecondsState, setCountdownSecondsState] = useState(5);
   const [userDataState, setUserDataState] = useState({
     name: "John Doe",
     phone: "+91 98765 43210",
@@ -631,48 +633,23 @@ export default function App() {
   });
 
   const [showBetSuccessState, setShowBetSuccessState] = useState(false);
-  const [lastBetDetailsState, setLastBetDetailsState] = useState(null);
-  const [redirectTimer, setRedirectTimer] = useState(null);
-  const [placedBetsState, setPlacedBetsState] = React.useState<any[]>([]);
+  const [lastBetDetailsState, setLastBetDetailsState] = useState<any>(null);
+  const [redirectTimer, setRedirectTimer] = useState<NodeJS.Timeout | null>(null);
+  const [placedBetsState, setPlacedBetsState] = React.useState<BetItem[]>([]);
 
   const [showAgeVerificationState, setShowAgeVerificationState] =
     React.useState(false);
   const [isAgeVerifiedState, setIsAgeVerifiedState] = React.useState(false);
   const [showKYCPageState, setShowKYCPageState] = React.useState(false);
-  const [showRefundPolicyState, setShowRefundPolicyState] =
-    React.useState(false);
 
   const gameCards = GAME_CARDS;
   const features = FEATURES;
 
   // UI state - consolidated to avoid conflicts
   const [activeTabLocal, setActiveTabLocal] = useState("home");
-  const [showBettingModalLocal, setShowBettingModalLocal] = useState(false);
-  const [showKYCPageLocal, setShowKYCPageLocal] = useState(false);
-  const [showAgeVerificationLocal, setShowAgeVerificationLocal] =
-    useState(false);
-  const [isAgeVerifiedLocal, setIsAgeVerifiedLocal] = useState(false);
 
   // Game state
-  const [selectedGameLocal, setSelectedGameLocal] = useState(null);
-
-  // Modal states
-  const [showAddCashModalLocal, setShowAddCashModalLocal] = useState(false);
-  const [showWithdrawModalLocal, setShowWithdrawModalLocal] = useState(false);
-  const [showPaymentModalLocal, setShowPaymentModalLocal] = useState(false);
-  const [showPaymentSuccessModalLocal, setShowPaymentSuccessModalLocal] =
-    useState(false);
-  const [showWithdrawSuccessModalLocal, setShowWithdrawSuccessModalLocal] =
-    useState(false);
-
-  // Form states
-  const [depositAmountLocal, setDepositAmountLocal] = useState("");
-  const [withdrawAmountLocal, setWithdrawAmountLocal] = useState("");
-  const [selectedPaymentMethodLocal, setSelectedPaymentMethodLocal] =
-    useState("");
-  const [utrNumberLocal, setUtrNumberLocal] = useState("");
-  const [activeTabState, setActiveTabState] = useState("home");
-  const [currentViewState, setCurrentViewState] = useState("home");
+  const [selectedGameLocal, setSelectedGameLocal] = useState<GameItem | null>(null);
 
   useEffect(() => {
     // Check age verification on app start
@@ -692,55 +669,7 @@ export default function App() {
     setShowBettingModalState(true);
   };
 
-  const handleBetSuccessState = (betDetails: any) => {
-    setLastBetDetailsState(betDetails);
-    setShowBetSuccessState(true);
-    setShowBettingModalState(false);
-
-    setTimeout(() => {
-      setShowBetSuccessState(false);
-      setActiveTabLocal("mybets");
-    }, 3000);
-  };
-
-  const handleKYCPress = () => {
-    setShowKYCPageState(true);
-  };
-
-  const handleAgeVerificationAccept = () => {
-    setIsAgeVerifiedState(true);
-    setShowAgeVerificationState(false);
-  };
-
-  const handlePaymentMethodSelect = (method: string) => {
-    setSelectedPaymentMethodState(method);
-    setShowAddCashModalState(false);
-    setShowPaymentModalState(true);
-  };
-
-  const handleUTRConfirmation = async () => {
-    if (utrNumberState.length !== 12) {
-      return;
-    }
-
-    //const amount = parseFloat(depositAmount);
-    //const result = await addMoney(amount, selectedPaymentMethod, utrNumber);
-    setShowPaymentModalState(false);
-    setShowPaymentSuccessModalState(true);
-  };
-
-  const handleWithdrawRequest = async (amount: number) => {
-    // Close withdraw modal first
-    setShowWithdrawModalState(false);
-
-    // Show withdrawal success page
-    setShowWithdrawSuccessModalState(true);
-
-    // Here you can make API call to withdraw money
-    // const result = await withdrawMoney(amount);
-
-    console.log("Withdrawal request submitted for amount:", amount);
-  };
+  
   const handleMenuItemPress = (key: string) => {
     // Allow access to these pages without authentication
     const publicPages = ["home", "refer", "terms", "privacy", "refund", "help"];
@@ -758,10 +687,9 @@ export default function App() {
 
     // User is authenticated, allow access to all components
     setActiveTabLocal(key);
-    setActiveTabState(key);
   };
 
-  const handleGameSelect = (game: any) => {
+  const handleGameSelect = (game: GameItem) => {
     const isUserAuthenticated =
       (isAuthenticated && user && user.id) ||
       (isAuthenticatedState && userDataState && userDataState.phone);
@@ -773,11 +701,10 @@ export default function App() {
     setSelectedGameLocal(game);
     setSelectedGameState(game); // Also set the state game
     setBetListState([]); // Clear any previous selections
-    setShowBettingModalLocal(true);
     setShowBettingModalState(true);
   };
 
-  const handleNumberSelect = (number: any, type: string, amount: number) => {
+  const handleNumberSelect = (number: string | number, type: string, amount: number) => {
     // Add number to selected list with amount
     const existingBetIndex = betListState.findIndex(
       (b) => b.number === number && b.type === type,
@@ -790,7 +717,7 @@ export default function App() {
       setBetListState(updatedBetList);
     } else {
       // Add new bet to list
-      const newBet = {
+      const newBet: BetItem = {
         id: Date.now(),
         number,
         amount,
@@ -840,12 +767,12 @@ export default function App() {
     }
 
     // Create bet records with proper status and timestamp
-    const newBets = betListState.map((bet) => ({
+    const newBets: BetItem[] = betListState.map((bet) => ({
       ...bet,
       id: Date.now() + Math.random(),
       game:
         selectedGameLocal?.title || selectedGameState?.title || "Unknown Game",
-      status: "pending" as const,
+      status: "pending",
       timestamp: Date.now(),
       sessionTime:
         selectedGameLocal?.timing ||
@@ -875,7 +802,6 @@ export default function App() {
     setBetListState([]);
 
     // Close betting modal and show success
-    setShowBettingModalLocal(false);
     setShowBettingModalState(false);
     setShowBetSuccessState(true);
 
@@ -886,64 +812,42 @@ export default function App() {
       console.log("Auto navigating to home page");
       setShowBetSuccessState(false);
       setActiveTabLocal("home");
-      setActiveTabState("home");
     }, 7000);
 
     setRedirectTimer(timer);
   };
 
   const handleBetPlace = (amount: number) => {
-    const currentWallet = parseFloat(wallet.replace("₹", "").replace(",", ""));
+    if (!selectedNumberState) return;
 
-    if (currentWallet >= amount) {
-      //setWallet(`Rs.${(currentWallet - amount).toFixed(2)}`);
+    const newBet: BetItem = {
+      id: Date.now(),
+      number: selectedNumberState,
+      amount: amount,
+      type: currentBetTypeState,
+      game: selectedGameState?.title || "Unknown Game",
+      timestamp: new Date(),
+      status: "pending",
+    };
 
-      const newBet = {
-        id: Date.now(),
-        number: selectedNumberState,
-        amount: amount,
-        type: currentBetTypeState,
-        game: selectedGameState?.title || "Unknown Game",
-        timestamp: new Date(),
-        status: "pending" as const,
-      };
+    // Here you can make API call to place bet
+    // const result = await apiService.placeBet({
+    //   gameId: selectedGame.id,
+    //   number: selectedNumber,
+    //   amount,
+    //   type: currentBetType
+    // });
 
-      // Here you can make API call to place bet
-      // const result = await apiService.placeBet({
-      //   gameId: selectedGame.id,
-      //   number: selectedNumber,
-      //   amount,
-      //   type: currentBetType
-      // });
-
-      setBetListState([...betListState, newBet]);
-      setShowAmountModalState(false);
-      Alert.alert(
-        "Bet Placed!",
-        `आपका ₹${amount} का bet ${selectedNumberState} पर लगा दिया गया है।`,
-      );
-    } else {
-      Alert.alert(
-        "Insufficient Coins",
-        "आपके wallet में पर्याप्त coins नहीं हैं।",
-      );
-    }
+    setBetListState([...betListState, newBet]);
+    setShowAmountModalState(false);
+    Alert.alert(
+      "Bet Placed!",
+      `आपका ₹${amount} का bet ${selectedNumberState} पर लगा दिया गया है।`,
+    );
   };
 
   const removeBet = (betId: number) => {
-    const bet = betListState.find((b) => b.id === betId);
-    if (bet) {
-      const currentWallet = parseFloat(
-        wallet.replace("₹", "").replace(",", ""),
-      );
-      //setWallet(`₹${(currentWallet + bet.amount).toFixed(2)}`);
-      setBetListState(betListState.filter((b) => b.id !== betId));
-    }
-  };
-
-  const handleAuthPress = (mode: string) => {
-    setAuthModeState(mode);
-    setShowAuthModalState(true);
+    setBetListState(betListState.filter((b) => b.id !== betId));
   };
 
   const handleAuthSuccess = (userData: any) => {
@@ -958,13 +862,11 @@ export default function App() {
     // Update all auth states for full app access
     setUserDataState(userData);
     setIsAuthenticatedState(true);
-    setUser(userData); // This updates the useAuth hook state
     setShowAuthRequired(false);
     setShowAuthModalState(false);
 
     // Force redirect to home page
     setActiveTabLocal("home");
-    setActiveTabState("home");
 
     // Show success message
     setTimeout(() => {
@@ -986,19 +888,7 @@ export default function App() {
     console.log("Authentication completed - user now has full app access");
   };
 
-  const handleLogin = async () => {
-    // Here you can make API call for login
-    // const result = await apiService.loginUser(phone, password);
-    Alert.alert("Login", "Login functionality to be implemented");
-    setShowAuthModalState(false);
-  };
-
-  const handleRegister = async () => {
-    // Here you can make API call for registration
-    // const result = await apiService.registerUser(userData);
-    Alert.alert("Register", "Registration functionality to be implemented");
-    setShowAuthModalState(false);
-  };
+  
 
   const checkAuthentication = () => {
     return (
@@ -1007,25 +897,7 @@ export default function App() {
     );
   };
 
-  const handleAddCash = async (amount: number) => {
-    if (!checkAuthentication()) {
-      Alert.alert(
-        "Login Required",
-        "Money add करने के लिए आपको login करना होगा।",
-      );
-      setShowAuthRequired(true);
-      setShowAuthModalState(true);
-      return;
-    }
-    // Here you can make API call to add money
-    // const result = await apiService.addMoney(amount);
-    setShowAddCashModalState(false);
-    setDepositAmountState("");
-    Alert.alert(
-      "Deposit Successful",
-      `₹${amount} has been added to your wallet. Admin approval pending.`,
-    );
-  };
+  
 
   const handleWithdraw = async (amount: number) => {
     if (!checkAuthentication()) {
@@ -1113,10 +985,6 @@ export default function App() {
       "KYC Verification",
       "KYC verification process will be implemented soon",
     );
-  };
-
-  const handleKYCPressState = () => {
-    setShowKYCPageState(true);
   };
 
   const handleAgeVerificationAcceptState = async () => {
@@ -1965,7 +1833,6 @@ export default function App() {
       // Clear all user-related states
       setShowAuthRequired(false);
       setActiveTabLocal("home");
-      setActiveTabState("home");
 
       // Show logout success message
       Alert.alert(
@@ -1988,9 +1855,7 @@ export default function App() {
       />
 
       {/* Content */}
-      <View
-        style={[styles.content, !isAgeVerifiedState && styles.blurredContent]}
-      >
+      <View style={styles.content}>
         {showKYCPageState ? (
           <KYCPage onBack={() => setShowKYCPageState(false)} />
         ) : (
@@ -2145,11 +2010,6 @@ export default function App() {
         amount={withdrawAmountState}
         paymentMethod={selectedPaymentMethodState || "Selected UPI"}
         onClose={handleWithdrawSuccessClose}
-        onNavigateToMyBets={() => {
-          setShowBetSuccessState(false);
-          setActiveTabLocal("mybets");
-          setActiveTabState("mybets");
-        }}
       />
 
       {/* Age Verification Modal */}
@@ -2164,7 +2024,6 @@ export default function App() {
         onClose={() => {
           setShowBetSuccessState(false);
           setActiveTabLocal("home");
-          setActiveTabState("home");
           if (redirectTimer) {
             clearTimeout(redirectTimer);
             setRedirectTimer(null);
