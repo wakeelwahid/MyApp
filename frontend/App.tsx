@@ -845,7 +845,6 @@ export default function App() {
       setActiveTabState('home');
     }, 7000);
 
-    ```python
     setRedirectTimer(timer);
   };
 
