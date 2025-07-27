@@ -80,9 +80,21 @@ def register_user(request):
             # Create wallet for user
             Wallet.objects.create(user=user)
 
+            # Generate JWT tokens for newly registered user
+            refresh = RefreshToken.for_user(user)
+            access_token = refresh.access_token
+            
             return JsonResponse({
                 'message': 'User registered successfully',
-                'referral_code': new_referral_code
+                'token': str(access_token),
+                'refresh': str(refresh),
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'mobile': user.mobile,
+                    'email': user.email,
+                    'referral_code': user.referral_code
+                }
             }, status=201)
 
         except json.JSONDecodeError:
@@ -127,7 +139,7 @@ def login_user(request):
 
             return JsonResponse({
                 'message': 'Login successful',
-                'access': str(access_token),
+                'token': str(access_token),
                 'refresh': str(refresh),
                 'user': {
                     'id': user.id,

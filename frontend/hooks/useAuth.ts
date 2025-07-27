@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { userService } from "../services/userService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,12 +10,13 @@ export const useAuth = () => {
 
   // Ensure authentication state is properly synchronized
   useEffect(() => {
-    const hasValidUser = user && user.id && user.phone;
+    const hasValidUser = user && user.id && user.mobile;
     setIsAuthenticated(hasValidUser);
     console.log("Auth state updated:", {
       hasValidUser,
       userId: user?.id,
-      userName: user?.name,
+      userName: user?.username,
+      userMobile: user?.mobile
     });
   }, [user]);
 
@@ -86,6 +88,7 @@ export const useAuth = () => {
   const login = async (credentials: any) => {
     try {
       setIsLoading(true);
+      
       // Validate credentials first
       const validation = validateCredentials(credentials);
       if (!validation.valid) {
@@ -99,20 +102,36 @@ export const useAuth = () => {
         password: credentials.password,
       });
 
+      console.log("Login API Response:", response);
+
       if (response.success && response.data) {
-        const { user, token } = response.data;
-        await AsyncStorage.setItem("user_data", JSON.stringify(user));
+        const { user: userData, token } = response.data;
+        
+        // Store JWT token and user data
         await AsyncStorage.setItem("auth_token", token);
-        setUser(user);
+        await AsyncStorage.setItem("user_data", JSON.stringify(userData));
+        
+        // Set user state
+        setUser(userData);
         setIsAuthenticated(true);
         setIsLoading(false);
-        return { success: true, user };
+        
+        console.log("✅ Login Successful:", {
+          user: userData.username,
+          mobile: userData.mobile,
+          token: token ? "✓ Present" : "✗ Missing"
+        });
+        
+        return { 
+          success: true, 
+          user: userData,
+          message: `🎉 Welcome back, ${userData.username}!`
+        };
       } else {
         setIsLoading(false);
         return {
           success: false,
-          error:
-            response.error || "Login में problem हुई। कृपया फिर से try करें।",
+          error: response.error || "Login में problem हुई। कृपया फिर से try करें।",
         };
       }
     } catch (error) {
@@ -120,7 +139,7 @@ export const useAuth = () => {
       console.error("Login error:", error);
       return {
         success: false,
-        error: "Login में problem हुई। कृपया फिर से try करें।",
+        error: "Network error. कृपया internet connection check करें।",
       };
     }
   };
@@ -128,6 +147,7 @@ export const useAuth = () => {
   const register = async (userData: any) => {
     try {
       setIsLoading(true);
+      
       // Validate registration data
       const validation = validateRegistration(userData);
       if (!validation.valid) {
@@ -144,14 +164,31 @@ export const useAuth = () => {
         referralCode: userData.referralCode?.trim().toUpperCase() || "",
       });
 
+      console.log("Register API Response:", response);
+
       if (response.success && response.data) {
-        const { user, token } = response.data;
-        await AsyncStorage.setItem("user_data", JSON.stringify(user));
+        const { user: newUser, token } = response.data;
+        
+        // Store JWT token and user data
         await AsyncStorage.setItem("auth_token", token);
-        setUser(user);
+        await AsyncStorage.setItem("user_data", JSON.stringify(newUser));
+        
+        // Set user state
+        setUser(newUser);
         setIsAuthenticated(true);
         setIsLoading(false);
-        return { success: true, user };
+        
+        console.log("✅ Registration Successful:", {
+          user: newUser.username,
+          mobile: newUser.mobile,
+          token: token ? "✓ Present" : "✗ Missing"
+        });
+        
+        return { 
+          success: true, 
+          user: newUser,
+          message: `🎉 Welcome ${newUser.username}! Account successfully created.`
+        };
       } else {
         setIsLoading(false);
         return {
@@ -161,9 +198,10 @@ export const useAuth = () => {
       }
     } catch (error) {
       setIsLoading(false);
+      console.error("Registration error:", error);
       return {
         success: false,
-        error: "Registration failed. Please try again.",
+        error: "Network error. Please check your internet connection.",
       };
     }
   };
@@ -178,8 +216,8 @@ export const useAuth = () => {
       setIsAuthenticated(false);
       setIsLoading(false);
 
-      console.log("Logout successful - all states cleared");
-      return { success: true };
+      console.log("🚪 Logout successful - all states cleared");
+      return { success: true, message: "Successfully logged out!" };
     } catch (error) {
       console.error("Logout error:", error);
       return { success: false, error: "Logout failed" };
@@ -210,9 +248,17 @@ export const useAuth = () => {
         const user = JSON.parse(userData);
         setUser(user);
         setIsAuthenticated(true);
+        
+        console.log("🔄 Auth Restored:", {
+          user: user.username,
+          mobile: user.mobile,
+          token: "✓ Valid"
+        });
+        
         return { success: true, user };
       }
 
+      console.log("❌ No saved auth found");
       return { success: false };
     } catch (error) {
       console.error("Auth check error:", error);
@@ -224,6 +270,7 @@ export const useAuth = () => {
     return isAuthenticated;
   };
 
+  // Initialize auth on app start
   useEffect(() => {
     const initAuth = async () => {
       try {

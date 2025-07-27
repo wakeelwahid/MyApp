@@ -853,7 +853,7 @@ export default function App() {
     const currentWallet = parseFloat(wallet.replace('₹', '').replace(',', ''));
 
     if (currentWallet >= amount) {
-      //setWallet(`Rs.${(currentWallet - amount).toFixed(2)}`);
+      // setWallet(`Rs.${(currentWallet - amount).toFixed(2)}`);
 
       const newBet = {
         id: Date.now(),
