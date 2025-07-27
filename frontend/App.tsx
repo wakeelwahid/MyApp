@@ -874,6 +874,8 @@ export default function App() {
     // Clear current bet selection
     setBetListState([]);
 
+```text
+
     // Close betting modal and show success
     setShowBettingModalLocal(false);
     setShowBettingModalState(false);
