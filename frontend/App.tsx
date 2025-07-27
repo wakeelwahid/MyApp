@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -85,7 +86,7 @@ export default function App() {
   const [showBettingModalState, setShowBettingModalState] = useState(false);
   const [selectedGameState, setSelectedGameState] = useState<GameItem | null>(null);
   const [showAmountModalState, setShowAmountModalState] = useState(false);
-  const [selectedNumberState] = useState<string>('');  // Add this line
+  const [selectedNumberState] = useState<string>('');
   const [customAmountState, setCustomAmountState] = useState("");
   const [betListState, setBetListState] = useState<BetItem[]>([]);
   const [betHistoryState, setBetHistoryState] = useState<BetItem[]>([
@@ -677,6 +678,7 @@ export default function App() {
 
   // UI state - consolidated to avoid conflicts
   const [activeTabLocal, setActiveTabLocal] = useState("home");
+  const [activeTabState, setActiveTabState] = useState("home"); // Add this missing state
 
   // Game state
   const [selectedGameLocal, setSelectedGameLocal] = useState<GameItem | null>(null);
@@ -698,7 +700,6 @@ export default function App() {
     setSelectedGameState(game);
     setShowBettingModalState(true);
   };
-
 
   const handleMenuItemPress = (key: string) => {
     // Allow access to these pages without authentication
@@ -848,8 +849,6 @@ export default function App() {
   };
 
   const handleBetPlace = (amount: number) => {
-    
-
     const newBet: BetItem = {
       id: Date.now(),
       number: selectedNumberState,
@@ -918,16 +917,12 @@ export default function App() {
     console.log("Authentication completed - user now has full app access");
   };
 
-
-
   const checkAuthentication = () => {
     return (
       (isAuthenticated && user && user.id) ||
       (isAuthenticatedState && userDataState && userDataState.phone)
     );
   };
-
-
 
   const handleWithdraw = async (amount: number) => {
     if (!checkAuthentication()) {
@@ -1040,6 +1035,9 @@ export default function App() {
       ],
     );
   };
+  
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  
   const handleViewResults = () => {
     setShowResultsModal(true);
   };
@@ -1820,14 +1818,14 @@ export default function App() {
         return (
           <View style={styles.tabContent}>
             <Text style={styles.tabTitle}>🚧 Coming Soon</Text>
-            <Text style={styles.comingSoonText}>यह फीचर जल्द हीआएगा</Text>
+            <Text style={styles.comingSoonText}>यह फीचर जल्द ही आएगा</Text>
           </View>
         );
     }
   };
 
   const handleHeaderMenuItemPress = (key: string) => {
-    console.log("Header menu item pressed:", key);```python
+    console.log("Header menu item pressed:", key);
 
     // Allow access to these pages without authentication
     const publicPages = ["refer", "terms", "privacy", "refund", "help"];
@@ -1871,8 +1869,6 @@ export default function App() {
       );
     }
   };
-
-  const [showResultsModal, setShowResultsModal] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -3101,14 +3097,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 12,
-    shadowColor: "#00FF88",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#00FF88",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
   },
   authRequiredButtonText: {
     color: "#000000",

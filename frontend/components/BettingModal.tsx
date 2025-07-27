@@ -761,8 +761,18 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: 3,
     borderColor: '#FFD700',
-    boxShadow: '0 25px 80px rgba(255, 215, 0, 0.4)',
     zIndex: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#FFD700',
+        shadowOffset: { width: 0, height: 25 },
+        shadowOpacity: 0.4,
+        shadowRadius: 80,
+      },
+      android: {
+        elevation: 12,
+      },
+    }),
   },
   modalHeader: {
     position: 'relative',
@@ -774,7 +784,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+    backgroundColor: '#1a1a1a',
   },
   headerContent: {
     flexDirection: 'row',
@@ -875,7 +885,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)',
+    backgroundColor: '#1a1a1a',
   },
   summaryTitle: {
     color: '#FFD700',
