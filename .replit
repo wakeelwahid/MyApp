@@ -17,7 +17,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd frontend && npx expo start --host 0.0.0.0"
+args = "cd frontend && npx expo start --host lan"
 
 [[workflows.workflow]]
 name = "Start Backend"
