@@ -1634,7 +1634,6 @@ export default function App() {
       return;
     }
 
-
     if (key === 'transactions') {
       setActiveTabLocal('transactions');
     } else if (key === 'history') {
