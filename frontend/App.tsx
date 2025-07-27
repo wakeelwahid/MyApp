@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Alert,
   Dimensions,
-  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -33,7 +32,7 @@ import ReferPage from "./components/ReferPage";
 import { GameHistory, ResultsModal } from "./components";
 
 // Import constants
-import { GAME_CARDS, FEATURES } from "./constants/gameData";
+import { GAME_CARDS } from "./constants/gameData";
 
 // Import hooks
 import { useAuth } from "./hooks/useAuth";
@@ -905,7 +904,7 @@ export default function App() {
     }, 300);
   };
 
-  
+
 
   const handleWithdraw = async (amount: number) => {
     if (!isAuthenticated || !user) {
@@ -1031,7 +1030,6 @@ export default function App() {
         return (
           <HomeScreen
             gameCards={GAME_CARDS}
-            features={FEATURES}
             onPlayNow={handlePlayNow}
             isAuthenticated={isAuthenticated}
             user={user}
@@ -1827,8 +1825,7 @@ export default function App() {
       setActiveTabLocal("help");
     } else if (key === "logout") {
       // Handle logout logic
-      logout();
-
+      logout();```text
       // Clear all user-related states
       setShowAuthRequired(false);
       setActiveTabLocal("home");
@@ -2955,13 +2952,6 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     borderWidth: 1,
     borderColor: "#4A90E2",
-  },
-  contactTitle: {
-    color: "#4A90E2",
-    fontSize: isSmallDevice ? 16 : 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 15,
   },
   contactText: {
     color: "#fff",
