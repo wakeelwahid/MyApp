@@ -676,11 +676,8 @@ export default function App() {
   const [showKYCPageState, setShowKYCPageState] = React.useState(false);
 
   const gameCards = GAME_CARDS;
-  const features = FEATURES;
-
   // UI state - consolidated to avoid conflicts
   const [activeTabLocal, setActiveTabLocal] = useState("home");
-  const [activeTabState, setActiveTabState] = useState("home"); // Add this missing state
 
   // Game state
   const [selectedGameLocal, setSelectedGameLocal] = useState<GameItem | null>(null);
@@ -908,9 +905,7 @@ export default function App() {
     }, 300);
   };
 
-  const checkAuthentication = () => {
-    return isAuthenticated && user && (user.id || user.mobile || user.phone);
-  };
+  
 
   const handleWithdraw = async (amount: number) => {
     if (!isAuthenticated || !user) {
@@ -1164,8 +1159,7 @@ export default function App() {
       case "history":
       case "bets":
         const isUserAuthenticated1 =
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone);
+          (isAuthenticated && user && user.id);
         if (!isUserAuthenticated1) {
           return (
             <View style={styles.authRequiredContainer}>
@@ -1193,8 +1187,7 @@ export default function App() {
         return <MyBet placedBets={placedBetsState} />;
       case "transactions":
         const isUserAuthenticated2 =
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone);
+          (isAuthenticated && user && user.id);
         if (!isUserAuthenticated2) {
           return (
             <View style={styles.authRequiredContainer}>
@@ -1545,8 +1538,7 @@ export default function App() {
         );
       case "games":
         const isUserAuthenticated3 =
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone);
+          (isAuthenticated && user && user.id);
         if (!isUserAuthenticated3) {
           return (
             <View style={styles.authRequiredContainer}>
@@ -1583,8 +1575,7 @@ export default function App() {
         return <Games gameCards={gameCards} onGameSelect={handleGameSelect} />;
       case "profile":
         const isUserAuthenticated4 =
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone);
+          (isAuthenticated && user && user.id);
         if (!isUserAuthenticated4) {
           return (
             <View style={styles.authRequiredContainer}>
@@ -1628,8 +1619,7 @@ export default function App() {
         );
       case "results":
         const isUserAuthenticated5 =
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone);
+          (isAuthenticated && user && user.id);
         if (!isUserAuthenticated5) {
           return (
             <View style={styles.authRequiredContainer}>
@@ -1813,8 +1803,7 @@ export default function App() {
     const publicPages = ["refer", "terms", "privacy", "refund", "help"];
 
     const isUserAuthenticated =
-      (isAuthenticated && user && user.id) ||
-      (isAuthenticatedState && userDataState && userDataState.phone);
+      (isAuthenticated && user && user.id);
 
     if (!isUserAuthenticated && !publicPages.includes(key)) {
       setShowAuthRequired(true);
@@ -2044,10 +2033,7 @@ export default function App() {
       <ResultsModal
         visible={showResultsModal}
         onClose={() => setShowResultsModal(false)}
-        isAuthenticated={
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone)
-        }
+        isAuthenticated={isAuthenticated && user && user.id}
         onAuthRequired={() => {
           setShowResultsModal(false);
           setShowAuthModalState(true);
@@ -3081,17 +3067,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 12,
-    ...Platform.select({
-      ios: {
-        boxShadow: "0 4px 8px rgba(0, 255, 136, 0.3)",
-      },
-      android: {
-        elevation: 8,
-      },
-      web: {
-        boxShadow: "0 4px 8px rgba(0, 255, 136, 0.3)",
-      },
-    }),
+    boxShadow: "0 4px 8px rgba(0, 255, 136, 0.3)",
   },
   authRequiredButtonText: {
     color: "#000000",
