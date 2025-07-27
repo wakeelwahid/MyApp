@@ -26,7 +26,7 @@ export interface RegisterData {
 
 class UserService {
   // Use your backend API base URL directly for local/dev
-  private baseUrl = "https://0.0.0.0:8000/api";
+  private baseUrl = "https://https://931f94c7-97e4-4090-b863-b4c79e93dcd2-00-2evcizu71q6al.picard.replit.dev/api";
 
   private async makeRequest<T>(
     endpoint: string,
