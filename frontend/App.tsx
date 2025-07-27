@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
+  Text,
   StyleSheet,
   SafeAreaView,
+  ScrollView,
+  Modal,
+  TextInput,
+  TouchableOpacity,
+  Alert,
   Dimensions,
   Platform,
 } from "react-native";
@@ -79,7 +85,7 @@ export default function App() {
   const [showBettingModalState, setShowBettingModalState] = useState(false);
   const [selectedGameState, setSelectedGameState] = useState<GameItem | null>(null);
   const [showAmountModalState, setShowAmountModalState] = useState(false);
-  const [selectedNumberState, setSelectedNumberState] = useState<string | number | null>(null);
+  const [selectedNumberState] = useState<string>('');  // Add this line
   const [customAmountState, setCustomAmountState] = useState("");
   const [betListState, setBetListState] = useState<BetItem[]>([]);
   const [betHistoryState, setBetHistoryState] = useState<BetItem[]>([
@@ -842,7 +848,7 @@ export default function App() {
   };
 
   const handleBetPlace = (amount: number) => {
-    if (!selectedNumberState) return;
+    
 
     const newBet: BetItem = {
       id: Date.now(),
