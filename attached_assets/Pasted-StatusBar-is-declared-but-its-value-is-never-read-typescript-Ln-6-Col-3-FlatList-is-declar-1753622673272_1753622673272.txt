@@ -1,0 +1,275 @@
+StatusBar' is declared but its value is never read.
+(typescript)
+Ln 6, Col 3
+'FlatList' is declared but its value is never read.
+(typescript)
+Ln 10, Col 3
+'Animated' is declared but its value is never read.
+(typescript)
+Ln 11, Col 3
+'BetHistory' is declared but its value is never read.
+(typescript)
+Ln 31, Col 1
+'RefundPolicy' is declared but its value is never read.
+(typescript)
+Ln 36, Col 1
+'userService' is declared but its value is never read.
+(typescript)
+Ln 40, Col 1
+'walletService' is declared but its value is never read.
+(typescript)
+Ln 41, Col 1
+'gameService' is declared but its value is never read.
+(typescript)
+Ln 42, Col 1
+'SCREEN_HEIGHT' is declared but its value is never read.
+(typescript)
+Ln 52, Col 38
+'isLargeDevice' is declared but its value is never read.
+(typescript)
+Ln 55, Col 7
+'login' is declared but its value is never read.
+(typescript)
+Ln 59, Col 34
+'register' is declared but its value is never read.
+(typescript)
+Ln 59, Col 41
+'updateProfile' is declared but its value is never read.
+(typescript)
+Ln 59, Col 59
+'winnings' is declared but its value is never read.
+(typescript)
+Ln 67, Col 19
+'bonus' is declared but its value is never read.
+(typescript)
+Ln 67, Col 29
+'addMoney' is declared but its value is never read.
+(typescript)
+Ln 67, Col 36
+'winningsState' is declared but its value is never read.
+(typescript)
+Ln 79, Col 10
+'setWinningsState' is declared but its value is never read.
+(typescript)
+Ln 79, Col 25
+'setSelectedNumberState' is declared but its value is never read.
+(typescript)
+Ln 83, Col 31
+'authModeState' is declared but its value is never read.
+(typescript)
+Ln 611, Col 10
+'countdownSecondsState' is declared but its value is never read.
+(typescript)
+Ln 624, Col 10
+'setCountdownSecondsState' is declared but its value is never read.
+(typescript)
+Ln 624, Col 33
+'showRefundPolicyState' is declared but its value is never read.
+(typescript)
+Ln 642, Col 10
+'setShowRefundPolicyState' is declared but its value is never read.
+(typescript)
+Ln 642, Col 33
+'showBettingModalLocal' is declared but its value is never read.
+(typescript)
+Ln 650, Col 10
+'showKYCPageLocal' is declared but its value is never read.
+(typescript)
+Ln 651, Col 10
+'setShowKYCPageLocal' is declared but its value is never read.
+(typescript)
+Ln 651, Col 28
+'showAgeVerificationLocal' is declared but its value is never read.
+(typescript)
+Ln 652, Col 10
+'setShowAgeVerificationLocal' is declared but its value is never read.
+(typescript)
+Ln 652, Col 36
+'isAgeVerifiedLocal' is declared but its value is never read.
+(typescript)
+Ln 654, Col 10
+'setIsAgeVerifiedLocal' is declared but its value is never read.
+(typescript)
+Ln 654, Col 30
+'showAddCashModalLocal' is declared but its value is never read.
+(typescript)
+Ln 660, Col 10
+'setShowAddCashModalLocal' is declared but its value is never read.
+(typescript)
+Ln 660, Col 33
+'showWithdrawModalLocal' is declared but its value is never read.
+(typescript)
+Ln 661, Col 10
+'setShowWithdrawModalLocal' is declared but its value is never read.
+(typescript)
+Ln 661, Col 34
+'showPaymentModalLocal' is declared but its value is never read.
+(typescript)
+Ln 662, Col 10
+'setShowPaymentModalLocal' is declared but its value is never read.
+(typescript)
+Ln 662, Col 33
+'showPaymentSuccessModalLocal' is declared but its value is never read.
+(typescript)
+Ln 663, Col 10
+'setShowPaymentSuccessModalLocal' is declared but its value is never read.
+(typescript)
+Ln 663, Col 40
+'showWithdrawSuccessModalLocal' is declared but its value is never read.
+(typescript)
+Ln 665, Col 10
+'setShowWithdrawSuccessModalLocal' is declared but its value is never read.
+(typescript)
+Ln 665, Col 41
+'depositAmountLocal' is declared but its value is never read.
+(typescript)
+Ln 669, Col 10
+'setDepositAmountLocal' is declared but its value is never read.
+(typescript)
+Ln 669, Col 30
+'withdrawAmountLocal' is declared but its value is never read.
+(typescript)
+Ln 670, Col 10
+'setWithdrawAmountLocal' is declared but its value is never read.
+(typescript)
+Ln 670, Col 31
+'selectedPaymentMethodLocal' is declared but its value is never read.
+(typescript)
+Ln 671, Col 10
+'setSelectedPaymentMethodLocal' is declared but its value is never read.
+(typescript)
+Ln 671, Col 38
+'utrNumberLocal' is declared but its value is never read.
+(typescript)
+Ln 673, Col 10
+'setUtrNumberLocal' is declared but its value is never read.
+(typescript)
+Ln 673, Col 26
+'activeTabState' is declared but its value is never read.
+(typescript)
+Ln 674, Col 10
+'currentViewState' is declared but its value is never read.
+(typescript)
+Ln 675, Col 10
+'setCurrentViewState' is declared but its value is never read.
+(typescript)
+Ln 675, Col 28
+'handleBetSuccessState' is declared but its value is never read.
+(typescript)
+Ln 695, Col 9
+'handleKYCPress' is declared but its value is never read.
+(typescript)
+Ln 706, Col 9
+'handleAgeVerificationAccept' is declared but its value is never read.
+(typescript)
+Ln 710, Col 9
+'handlePaymentMethodSelect' is declared but its value is never read.
+(typescript)
+Ln 715, Col 9
+'handleUTRConfirmation' is declared but its value is never read.
+(typescript)
+Ln 721, Col 9
+'handleWithdrawRequest' is declared but its value is never read.
+(typescript)
+Ln 732, Col 9
+Property 'number' does not exist on type 'never'.
+(typescript)
+Ln 783, Col 16
+Property 'type' does not exist on type 'never'.
+(typescript)
+Ln 783, Col 39
+Property 'amount' does not exist on type 'never'.
+(typescript)
+Ln 789, Col 40
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 798, Col 34
+Type '{ id: number; number: any; amount: number; type: string; game: any; timestamp: Date; }' is not assignable to type 'never'.
+(typescript)
+Ln 801, Col 24
+Type '{ id: number; number: any; amount: number; type: string; game: any; timestamp: Date; }' is not assignable to type 'never'.
+(typescript)
+Ln 801, Col 41
+Property 'amount' does not exist on type 'never'.
+(typescript)
+Ln 827, Col 35
+Spread types may only be created from object types.
+(typescript)
+Ln 844, Col 7
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 847, Col 28
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 847, Col 56
+Property 'timing' does not exist on type 'never'.
+(typescript)
+Ln 851, Col 28
+Property 'timing' does not exist on type 'never'.
+(typescript)
+Ln 852, Col 28
+Property 'number' does not exist on type 'never'.
+(typescript)
+Ln 862, Col 36
+Property 'type' does not exist on type 'never'.
+(typescript)
+Ln 864, Col 68
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 865, Col 36
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 865, Col 64
+Argument of type '{ number: string; amount: number; type: any; gameName: any; betCount: number; }' is not assignable to parameter of type 'SetStateAction<null>'. Type '{ number: string; amount: number; type: any; gameName: any; betCount: number; }' provides no match for the signature '(prevState: null): null'.
+(typescript)
+Ln 872, Col 28
+Argument of type 'Timeout' is not assignable to parameter of type 'SetStateAction<null>'. Type 'Timeout' provides no match for the signature '(prevState: null): null'.
+(typescript)
+Ln 892, Col 22
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 906, Col 34
+Type '{ id: number; number: null; amount: number; type: string; game: any; timestamp: Date; status: "pending"; }' is not assignable to type 'never'.
+(typescript)
+Ln 919, Col 24
+Type '{ id: number; number: null; amount: number; type: string; game: any; timestamp: Date; status: "pending"; }' is not assignable to type 'never'.
+(typescript)
+Ln 919, Col 41
+Property 'id' does not exist on type 'never'.
+(typescript)
+Ln 934, Col 44
+'currentWallet' is declared but its value is never read.
+(typescript)
+Ln 936, Col 13
+Property 'id' does not exist on type 'never'.
+(typescript)
+Ln 940, Col 52
+'handleAuthPress' is declared but its value is never read.
+(typescript)
+Ln 944, Col 9
+Cannot find name 'setUser'.
+(typescript)
+Ln 961, Col 5
+'handleLogin' is declared but its value is never read.
+(typescript)
+Ln 989, Col 9
+'handleRegister' is declared but its value is never read.
+(typescript)
+Ln 996, Col 9
+'handleAddCash' is declared but its value is never read.
+(typescript)
+Ln 1010, Col 9
+'handleKYCPressState' is declared but its value is never read.
+(typescript)
+Ln 1118, Col 9
+Property 'blurredContent' does not exist on type '{ container: { flex: number; backgroundColor: string; }; content: { flex: number; }; tabContent: { flex: number; padding: number; alignItems: "center"; }; tabTitle: { fontSize: number; fontWeight: "bold"; color: string; marginBottom: number; }; ... 159 more ...; authRequiredButtonText: { ...; }; }'.
+(typescript)
+Ln 1992, Col 63
+Property 'title' does not exist on type 'never'.
+(typescript)
+Ln 2051, Col 45
+Type '{ visible: boolean; amount: string; paymentMethod: string; onClose: () => void; onNavigateToMyBets: () => void; }' is not assignable to type 'IntrinsicAttributes & WithdrawSuccessProps'. Property 'onNavigateToMyBets' does not exist on type 'IntrinsicAttributes & WithdrawSuccessProps'.
+(typescript)
+Ln 2148, Col 9
+An object literal cannot have multiple properties with the same name.
+(typescript)
