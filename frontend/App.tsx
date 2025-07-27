@@ -67,7 +67,6 @@ export default function App() {
 
   // Use proper authentication state from useAuth hook
   const [showAuthRequired, setShowAuthRequired] = useState(false);
-  const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
 
   // Wallet state
   const { wallet, withdrawMoney } = useWallet();
@@ -75,10 +74,14 @@ export default function App() {
   // Sync authentication states
   useEffect(() => {
     if (isAuthenticated && user) {
-      setIsAuthenticatedState(true);
       setShowAuthRequired(false);
+      console.log("✅ User authenticated:", {
+        name: user.username || user.name,
+        phone: user.mobile || user.phone,
+        id: user.id
+      });
     } else {
-      setIsAuthenticatedState(false);
+      console.log("❌ User not authenticated");
     }
   }, [isAuthenticated, user]);
 
@@ -688,10 +691,7 @@ export default function App() {
   }, []);
 
   const handlePlayNow = (game: any) => {
-    const isUserAuthenticated =
-      (isAuthenticated && user && user.id) ||
-      (isAuthenticatedState && userDataState && userDataState.phone);
-    if (!isUserAuthenticated) {
+    if (!isAuthenticated || !user) {
       setShowAuthRequired(true);
       setShowAuthModalState(true);
       return;
@@ -704,12 +704,7 @@ export default function App() {
     // Allow access to these pages without authentication
     const publicPages = ["home", "refer", "terms", "privacy", "refund", "help"];
 
-    // Check authentication status properly
-    const isUserAuthenticated =
-      (isAuthenticated && user && user.id) ||
-      (isAuthenticatedState && userDataState && userDataState.phone);
-
-    if (!isUserAuthenticated && !publicPages.includes(key)) {
+    if (!isAuthenticated && !publicPages.includes(key)) {
       setShowAuthRequired(true);
       setShowAuthModalState(true);
       return;
@@ -720,10 +715,7 @@ export default function App() {
   };
 
   const handleGameSelect = (game: GameItem) => {
-    const isUserAuthenticated =
-      (isAuthenticated && user && user.id) ||
-      (isAuthenticatedState && userDataState && userDataState.phone);
-    if (!isUserAuthenticated) {
+    if (!isAuthenticated || !user) {
       setShowAuthRequired(true);
       setShowAuthModalState(true);
       return;
@@ -762,10 +754,7 @@ export default function App() {
   const handlePlaceBets = () => {
     console.log("handlePlaceBets called with betList:", betListState);
 
-    const isUserAuthenticated =
-      (isAuthenticated && user && user.id) ||
-      (isAuthenticatedState && userDataState && userDataState.phone);
-    if (!isUserAuthenticated) {
+    if (!isAuthenticated || !user) {
       Alert.alert(
         "Login Required",
         "Bet place करने के लिए आपको login करना होगा।",
@@ -887,8 +876,7 @@ export default function App() {
       return;
     }
 
-    // Update local state immediately
-    setUserDataState(userData);
+    // Close auth modals immediately
     setShowAuthRequired(false);
     setShowAuthModalState(false);
 
@@ -921,14 +909,11 @@ export default function App() {
   };
 
   const checkAuthentication = () => {
-    return (
-      (isAuthenticated && user && user.id) ||
-      (isAuthenticatedState && userDataState && userDataState.phone)
-    );
+    return isAuthenticated && user && (user.id || user.mobile || user.phone);
   };
 
   const handleWithdraw = async (amount: number) => {
-    if (!checkAuthentication()) {
+    if (!isAuthenticated || !user) {
       Alert.alert(
         "Login Required",
         "Money withdraw करने के लिए आपको login करना होगा।",
@@ -1048,14 +1033,13 @@ export default function App() {
   const renderContent = () => {
     switch (activeTabLocal) {
       case "home":
-        const currentUser = user || userDataState;
         return (
           <HomeScreen
             gameCards={GAME_CARDS}
             features={FEATURES}
             onPlayNow={handlePlayNow}
-            isAuthenticated={checkAuthentication()}
-            user={currentUser}
+            isAuthenticated={isAuthenticated}
+            user={user}
             onViewResults={handleViewResults}
             onNavigate={(screen: string) => setActiveTabLocal(screen)}
           />
@@ -1063,10 +1047,7 @@ export default function App() {
       case "game-history":
         return <GameHistory betHistory={betHistoryState} />;
       case "wallet":
-        const isUserAuthenticated =
-          (isAuthenticated && user && user.id) ||
-          (isAuthenticatedState && userDataState && userDataState.phone);
-        if (!isUserAuthenticated) {
+        if (!isAuthenticated || !user) {
           return (
             <View style={styles.authRequiredContainer}>
               <View style={styles.authRequiredCard}>
