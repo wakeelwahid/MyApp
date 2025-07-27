@@ -53,6 +53,16 @@ MIDDLEWARE = [
 ]
 
 # CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8081",
+    "http://127.0.0.1:8081",
+    "http://localhost:8082",
+    "http://127.0.0.1:8082",
+    "https://931f94c7-97e4-4090-b863-b4c79e93dcd2-00-2evcizu71q6al.picard.replit.dev",
+]
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'backend.urls'

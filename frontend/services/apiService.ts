@@ -34,7 +34,7 @@ interface BetData {
 
 // API Service for all HTTP requests
 export const apiService = {
-  baseURL: process.env.EXPO_PUBLIC_API_URL || 'https://api.example.com',
+  baseURL: process.env.EXPO_PUBLIC_API_URL || 'https://931f94c7-97e4-4090-b863-b4c79e93dcd2-00-2evcizu71q6al.picard.replit.dev',
 
   // GET request
   get: async (endpoint: string) => {

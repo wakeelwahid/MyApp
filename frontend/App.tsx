@@ -845,6 +845,7 @@ export default function App() {
       setActiveTabState('home');
     }, 7000);
 
+    ```python
     setRedirectTimer(timer);
   };
 
@@ -1117,7 +1118,7 @@ export default function App() {
                 </Text>
                 <TouchableOpacity 
                   style={styles.authRequiredButton}
-                  onPress={() => {
+                  onPress={()={() => {
                     setShowAuthRequired(true);
                     setShowAuthModalState(true);
                   }}
@@ -1216,7 +1217,7 @@ export default function App() {
                 </Text>
                 <TouchableOpacity 
                   style={styles.authRequiredButton}
-                  onPress={() => {
+                  onPress={()={() => {
                     setShowAuthRequired(true);
                     setShowAuthModalState(true);
                   }}
@@ -1241,7 +1242,7 @@ export default function App() {
                 </Text>
                 <TouchableOpacity 
                   style={styles.authRequiredButton}
-                  onPress={() => {
+                  onPress={()={() => {
                     setShowAuthRequired(true);
                     setShowAuthModalState(true);
                   }}
@@ -1445,7 +1446,7 @@ export default function App() {
                 </Text>
                 <TouchableOpacity 
                   style={styles.authRequiredButton}
-                  onPress={() => {
+                  onPress={()={() => {
                     setShowAuthRequired(true);
                     setShowAuthModalState(true);
                   }}
@@ -1481,7 +1482,7 @@ export default function App() {
                 </Text>
                 <TouchableOpacity 
                   style={styles.authRequiredButton}
-                  onPress={() => {
+                  onPress={()={() => {
                     setShowAuthRequired(true);
                     setShowAuthModalState(true);
                   }}
@@ -1512,7 +1513,7 @@ export default function App() {
                 </Text>
                 <TouchableOpacity 
                   style={styles.authRequiredButton}
-                  onPress={() => {
+                  onPress={()={() => {
                     setShowAuthRequired(true);
                     setShowAuthModalState(true);
                   }}
@@ -1611,7 +1612,7 @@ export default function App() {
         );
       default:
         return (
-          <View style={styles.tabContent}>
+          <View style={styles.tabContent}>```python
             <Text style={styles.tabTitle}>🚧 Coming Soon</Text>
             <Text style={styles.comingSoonText}>यह फीचर जल्द हीआएगा</Text>
           </View>
@@ -2886,14 +2887,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 12,
-    shadowColor: '#00FF88',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    boxShadow: '0 8px 20px rgba(0, 255, 136, 0.3)',
   },
   authRequiredButtonText: {
     color: '#000000',
