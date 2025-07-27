@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -880,41 +879,45 @@ export default function App() {
   };
 
   const handleAuthSuccess = (userData: any) => {
-    // Validate user data before setting
-    if (!userData || !userData.phone) {
+    console.log("🎯 Auth success handler called with:", userData);
+
+    if (!userData || (!userData.phone && !userData.mobile)) {
+      console.error("❌ Invalid user data received:", userData);
       Alert.alert("Error", "Invalid user data received");
       return;
     }
 
-    console.log("Auth success with user data:", userData);
-
-    // Update all auth states for full app access
+    // Update local state immediately
     setUserDataState(userData);
-    setIsAuthenticatedState(true);
     setShowAuthRequired(false);
     setShowAuthModalState(false);
 
     // Force redirect to home page
     setActiveTabLocal("home");
 
-    // Show success message
+    console.log("✅ Auth success completed:", {
+      name: userData.username || userData.name,
+      mobile: userData.mobile || userData.phone,
+      redirectedToHome: true
+    });
+
+    // Show success message after state update
     setTimeout(() => {
+      const userName = userData.username || userData.name;
       if (userData.isNewUser) {
         Alert.alert(
           "🎉 Welcome!",
-          `${userData.name}, आपका account successfully create हो गया!\n\n🎁 Welcome bonus: ₹100\n📱 सभी features अब unlock हैं!`,
+          `${userName}, आपका account successfully create हो गया!\n\n🎁 Welcome bonus: ₹100\n📱 सभी features अब unlock हैं!`,
           [{ text: "शुरू करें", style: "default" }],
         );
       } else {
         Alert.alert(
           "✅ Login Successful",
-          `Welcome back, ${userData.name}!\n\n🎮 अब आप सभी games और features access कर सकते हैं!`,
+          `Welcome back, ${userName}!\n\n🎮 अब आप सभी games और features access कर सकते हैं!`,
           [{ text: "Continue", style: "default" }],
         );
       }
-    }, 500);
-
-    console.log("Authentication completed - user now has full app access");
+    }, 300);
   };
 
   const checkAuthentication = () => {
@@ -1035,9 +1038,9 @@ export default function App() {
       ],
     );
   };
-  
+
   const [showResultsModal, setShowResultsModal] = useState(false);
-  
+
   const handleViewResults = () => {
     setShowResultsModal(true);
   };
@@ -1045,18 +1048,16 @@ export default function App() {
   const renderContent = () => {
     switch (activeTabLocal) {
       case "home":
+        const currentUser = user || userDataState;
         return (
           <HomeScreen
-            gameCards={gameCards}
-            features={features}
+            gameCards={GAME_CARDS}
+            features={FEATURES}
             onPlayNow={handlePlayNow}
             isAuthenticated={checkAuthentication()}
-            user={userDataState || user}
+            user={currentUser}
             onViewResults={handleViewResults}
-            onNavigate={(screen) => {
-              setActiveTabLocal(screen);
-              setActiveTabState(screen);
-            }}
+            onNavigate={(screen: string) => setActiveTabLocal(screen)}
           />
         );
       case "game-history":
@@ -1816,7 +1817,7 @@ export default function App() {
         );
       default:
         return (
-          <View style={styles.tabContent}>
+          <View style={styles.tabContent}>```text
             <Text style={styles.tabTitle}>🚧 Coming Soon</Text>
             <Text style={styles.comingSoonText}>यह फीचर जल्द ही आएगा</Text>
           </View>
@@ -1987,14 +1988,16 @@ export default function App() {
       </Modal>
 
       {/* Authentication Screen */}
-      <AuthScreen
-        visible={showAuthModalState && showAuthRequired}
-        onAuthSuccess={handleAuthSuccess}
-        onClose={() => {
-          setShowAuthModalState(false);
-          setShowAuthRequired(false);
-        }}
-      />
+      {(showAuthRequired || showAuthModalState) && (
+        <AuthScreen
+          visible={showAuthRequired || showAuthModalState}
+          onAuthSuccess={handleAuthSuccess}
+          onClose={() => {
+            setShowAuthRequired(false);
+            setShowAuthModalState(false);
+          }}
+        />
+      )}
 
       {/* Wallet Operations Component */}
       <WalletOperations
